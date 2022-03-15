@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         }
         getInten();
         firstFragment.elementList2 = elementList;
+        secondFragment.elementList2 = elementList;
         loadFragment(firstFragment);
     }
 

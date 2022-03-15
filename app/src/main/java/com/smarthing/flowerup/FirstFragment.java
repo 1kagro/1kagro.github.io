@@ -69,22 +69,12 @@ public class FirstFragment extends Fragment {
     }
 
     List<ListElement> elementList2;
-    FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View firstFragment = inflater.inflate(R.layout.fragment_first, container, false);
-
-        fab = firstFragment.findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NewPlant.class);
-                startActivity(intent);
-            }
-        });
 
         recyclerView = (RecyclerView) firstFragment.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

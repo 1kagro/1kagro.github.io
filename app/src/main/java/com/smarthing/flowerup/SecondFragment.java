@@ -65,14 +65,14 @@ public class SecondFragment extends Fragment {
     }
 
     RecyclerView recyclerView;
-    List<ListElement> elementList;
+    List<ListElement> elementList2;
     FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View secondFragment = inflater.inflate(R.layout.fragment_first, container, false);
+        View secondFragment = inflater.inflate(R.layout.fragment_second, container, false);
 
         fab = secondFragment.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,20 +83,10 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        elementList = new ArrayList<>();
         recyclerView = (RecyclerView) secondFragment.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", true, true));
-        elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", true, true));
-        elementList.add(new ListElement("Verdecita", "Magnoliophyta", "Estudio", true, true));
-        elementList.add(new ListElement("Pullas", "Epipremnum aureum", "Patio", true, true));
-        elementList.add(new ListElement("Lengua de suegra", "Dracaena trifasciata", "Patio", true, true));
-        elementList.add(new ListElement( "Sol", "Crassula ovata", "Patio", true, true));
-        elementList.add(new ListElement("Alixc", "Crassula ovata", "Patio", true, true));
-
-
-        ListAdapter listAdapter = new ListAdapter(elementList);
+        ListAdapter listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
 
 
