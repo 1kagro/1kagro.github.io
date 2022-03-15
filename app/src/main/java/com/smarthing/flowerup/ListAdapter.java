@@ -54,6 +54,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             category = itemView.findViewById(R.id.categoria_plant);
             room = itemView.findViewById(R.id.ubicacion_plant);
 
+
             temp = itemView.findViewById(R.id.btn_temp);
             humedad = itemView.findViewById(R.id.btn_water);
         }
@@ -64,8 +65,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             category.setText(item.getCategory());
             room.setText(item.getRoom());
 
-
-            temp.setVisibility(View.GONE);
+            if(item.isSw_temp() == false) temp.setVisibility(View.INVISIBLE);
+            if(item.isSw_humedad() == false) humedad.setVisibility(View.INVISIBLE);
+            //temp.setVisibility(View.GONE);
             /*temp.setBackgroundDrawable(null);
             temp.setCompoundDrawables(null, null, null, null);
             temp.setText("");

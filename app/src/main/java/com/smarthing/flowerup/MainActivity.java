@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
         if(intent.getExtras() != null){
             String name = intent.getStringExtra("name");
             String botanical_name = intent.getStringExtra("botanical_name");
-            String site = intent.getStringExtra("botanical_name");
+            String site = intent.getStringExtra("site");
             boolean sw_humedad = intent.getBooleanExtra("sw_humedad", false);
             boolean sw_temp = intent.getBooleanExtra("sw_temp", false);
-            elementList.add(new ListElement(name, botanical_name, site, sw_humedad, sw_temp));
+            elementList.add(new ListElement(name, botanical_name, site, sw_temp, sw_humedad));
         } else {
             System.out.println("Cagaste, no hay datos");
         }
