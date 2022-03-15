@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewPlant"
+    android:padding="30dp"
+    android:paddingBottom="0dp">
+
+    <TextView
+        android:id="@+id/tv_new_plant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Plant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#FAEEEE"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_plant">
+
+        <TextView
+            android:id="@+id/appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apearance"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imagePlant"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_baseline_local_florist_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appearance" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txI_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagePlant">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txI_nameIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de la planta" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/botanical_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txI_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/botanical_nameIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FAEEEE"
+                android:hint="Categoria de la planta o nombre biologico (?)" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/site_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txI_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txI_siteIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FAEEEE"
+                android:hint="Lugar/Habitación de la planta" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sensores_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/site_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp">
+
+
+
+        <TextView
+            android:id="@+id/txt_sensores_act"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAEEEE"
+            android:text="Sensores activos"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:id="@+id/contenedor_sensores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FAEEEE"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_sensores_act">
+
+            <ImageView
+                android:id="@+id/image_humedad"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/water_30" />
+
+            <TextView
+                android:id="@+id/tx_humedad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="40dp"
+                android:layout_toEndOf="@+id/image_humedad"
+                android:text="Humedad" />
+
+            <Switch
+                android:id="@+id/sw_humedad"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="60dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#BCBCBC"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/contenedor_sensores"/>
+        <RelativeLayout
+            android:id="@+id/contenedor_sensores_temp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="#FAEEEE"
+            app:layout_constraintTop_toBottomOf="@id/contenedor_sensores">
+
+            <ImageView
+                android:id="@+id/image_temp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/temperature_30" />
+
+            <TextView
+                android:id="@+id/tx_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:text="Temperatura"
+                android:layout_toEndOf="@id/image_temp"/>
+
+            <Switch
+                android:id="@+id/sw_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="60dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#BCBCBC"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/contenedor_sensores_temp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flow_horizontalAlign="center"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensores_layout"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="60dp"
+            android:backgroundTint="#F5C9BC"
+            android:onClick="cancelarPlanta"
+            android:text="Cancelar" />
+
+        <Button
+            android:id="@+id/btn_crear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="60dp"
+            android:backgroundTint="#BCD3A5"
+            android:onClick="agregarPlanta"
+            android:text="Crear" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

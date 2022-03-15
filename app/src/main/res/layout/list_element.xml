@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_plant"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <ImageView
+                android:id="@+id/imageViewPlant"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:src="@drawable/ic_baseline_local_florist_24" />
+
+            <!--<Button
+                android:id="@+id/btn_water"
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:layout_alignBottom="@id/imageViewPlant"
+                android:layout_toEndOf="@id/imageViewPlant"
+                android:backgroundTint="#BEF3FE"
+                android:drawableLeft="@drawable/water_30"
+                android:text="- 100"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_temp"
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:backgroundTint="#FFE68D"
+                android:drawableLeft="@drawable/temperature_30"
+                android:text="- 100"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="12sp" />-->
+            <LinearLayout
+                android:id="@+id/linerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@id/imageViewPlant"
+                android:layout_toRightOf="@id/imageViewPlant"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="Nombre de la planta"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+
+                <TextView
+                    android:id="@+id/categoria_plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <!--<Button
+                        android:id="@+id/btn_water"
+                        android:layout_width="110dp"
+                        android:layout_height="33dp"
+                        android:backgroundTint="#BEF3FE"
+                        android:drawableLeft="@drawable/water_30"
+                        android:text="- 100"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_temp"
+                        android:layout_width="110dp"
+                        android:layout_height="33dp"
+                        android:backgroundTint="#FFE68D"
+                        android:drawableLeft="@drawable/temperature_30"
+                        android:text="- 100"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />-->
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/ubicacion_plant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubicacion de la planta"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textEnd" />
+
+            <Button
+                android:id="@+id/btn_water"
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:layout_alignBottom="@id/btn_temp"
+                android:layout_marginStart="79dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/btn_temp"
+                android:layout_toEndOf="@+id/imageViewPlant"
+                android:backgroundTint="#BEF3FE"
+                android:drawableLeft="@drawable/water_30"
+                android:text="100%"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_temp"
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:layout_alignBottom="@id/imageViewPlant"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="#FFE68D"
+                android:drawableLeft="@drawable/temperature_30"
+                android:text="100°C"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
