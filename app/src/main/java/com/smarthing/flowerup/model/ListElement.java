@@ -10,10 +10,12 @@ public class ListElement {
     private boolean sw_temp;
     private boolean sw_humedad;
 
-    public ListElement(String name, String category, String room, boolean sw_temp, boolean sw_humedad) {
+    public ListElement(String name, String category, String room, float humedad, float temp, boolean sw_temp, boolean sw_humedad) {
         this.setName(name);
         this.setCategory(category);
         this.setRoom(room);
+        this.setTemp(temp);
+        this.setHumedad(humedad);
         this.setSw_temp(sw_temp);
         this.setSw_humedad(sw_humedad);
     }

@@ -81,7 +81,8 @@
                     android:id="@+id/categoria_plant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Categoria" />
+                    android:text="Categoria"
+                    android:drawableLeft="@drawable/ic_baseline_category_24"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -119,6 +120,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="6dp"
                 android:layout_marginRight="6dp"
+                android:drawableLeft="@drawable/ic_baseline_place_24"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:textAlignment="textEnd" />

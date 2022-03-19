@@ -8,8 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="red_danger">#c0392b</color>
+
     <color name="green_dark">#062928</color>
     <color name="green_normal">#044a42</color>
+    <color name="green_base">#27ae60</color>
     <color name="green_light">#3a9188</color>
     <color name="green_light_2">#b8e1dd</color>
+
+    <color name="gray_light">#bdc3c7</color>
+    <color name="gray_light2">#ecf0f1</color>
 </resources>

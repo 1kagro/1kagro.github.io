@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flowerup">
         <activity
-            android:name=".NewPlant"
+            android:name=".DetallePlanta"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NewPlant"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

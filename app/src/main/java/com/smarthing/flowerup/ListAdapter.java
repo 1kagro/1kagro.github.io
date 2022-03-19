@@ -1,5 +1,6 @@
 package com.smarthing.flowerup;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
         holder.bindData(mData.get(position));
+
+        final ListElement item = mData.get(position);
+        holder.name.setText(item.getName());
+        holder.category.setText(item.getCategory());
+        holder.room.setText(item.getRoom());
+        holder.temp.setText(item.getTemp() + "");
+        holder.humedad.setText(item.getHumedad() + "");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), DetallePlanta.class);
+                intent.putExtra("name", holder.name.getText().toString());
+                intent.putExtra("category", holder.category.getText().toString());
+                intent.putExtra("temp", holder.temp.getText().toString());
+                intent.putExtra("humedad", holder.humedad.getText().toString());
+                intent.putExtra("room", holder.room.getText().toString());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

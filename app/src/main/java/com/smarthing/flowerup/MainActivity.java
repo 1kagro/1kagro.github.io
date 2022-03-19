@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //firstFragment.getInten();
         if(elementList.size() < 1) {
-            elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", true, true));
-            elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", true, true));
-            elementList.add(new ListElement("Verdecita", "Magnoliophyta", "Estudio", true, true));
-            elementList.add(new ListElement("Pullas", "Epipremnum aureum", "Patio", true, true));
-            elementList.add(new ListElement("Lengua de suegra", "Dracaena trifasciata", "Patio", true, true));
-            elementList.add(new ListElement( "Sol", "Crassula ovata", "Patio", true, true));
-            elementList.add(new ListElement("Alixc", "Crassula ovata", "Patio", true, true));
+            elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", 15, 20, true, true));
+            elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", 100, 20, true, true));
+            elementList.add(new ListElement("Verdecita", "Magnoliophyta", "Estudio", 18, 70, true, true));
+            elementList.add(new ListElement("Pullas", "Epipremnum aureum", "Patio", 18, 20, true, true));
+            elementList.add(new ListElement("Lengua de suegra", "Dracaena trifasciata", "Patio", 15, 20, true, true));
+            elementList.add(new ListElement( "Sol", "Crassula ovata", "Patio", 11, 22, true, true));
+            elementList.add(new ListElement("Alixc", "Crassula ovata", "Patio", 15, 20, true, true));
         }
         getInten();
         firstFragment.elementList2 = elementList;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             String site = intent.getStringExtra("site");
             boolean sw_humedad = intent.getBooleanExtra("sw_humedad", false);
             boolean sw_temp = intent.getBooleanExtra("sw_temp", false);
-            elementList.add(new ListElement(name, botanical_name, site, sw_temp, sw_humedad));
+            elementList.add(new ListElement(name, botanical_name, site, 10, 15, sw_temp, sw_humedad));
         } else {
             System.out.println("Cagaste, no hay datos");
         }
