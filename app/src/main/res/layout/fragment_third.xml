@@ -67,12 +67,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tx_label_email"/>
 
-        <TextView
-            android:id="@+id/tx_cerrar_sesion"
+        <Button
+            android:id="@+id/btn_cerrar_sesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cerrar sesión"
-            android:textColor="@color/green_light"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/cardview_shadow_start_color"
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

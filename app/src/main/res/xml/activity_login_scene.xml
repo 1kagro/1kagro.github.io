@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="2524">
+       <KeyFrameSet>
+
+
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/login_image"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            motion:layout_constraintBottom_toTopOf="@id/tx_email"
+            motion:layout_constraintHorizontal_bias="0.498"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/tx_email"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@id/tx_password"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="25dp" />
+        <Constraint
+            android:id="@+id/tx_password"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/btn_login"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/tx_password"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="25dp" />
+        <Constraint
+            android:id="@+id/tx_register_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/btn_login"
+            motion:layout_constraintStart_toStartOf="@id/btn_login"
+            android:layout_marginTop="25dp" />
+        <Constraint
+            android:id="@+id/tx_forgot_password"
+            motion:layout_constraintEnd_toEndOf="@id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/btn_login"
+            android:layout_marginTop="25dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:autoTransition="none" />
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:autoTransition="jumpToStart" >
+        <OnSwipe motion:springDamping="34.014"
+            motion:springStiffness="817.33"
+            motion:springStopThreshold="0.8101"
+            motion:springMass="4.6" />
+    </Transition>
+</MotionScene>
