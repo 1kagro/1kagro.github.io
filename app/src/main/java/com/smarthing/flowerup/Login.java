@@ -30,7 +30,7 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
     TextInputEditText usuario, password;
     Button btnlogin;
-    String user, pass, name, first_name;
+    String user, pass, name, first_name, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class Login extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         System.out.println("Response object " + jsonObject.getString("Username"));
+                        id = jsonObject.getString("ID");
                         first_name = jsonObject.getString("Nombre");
                         name = jsonObject.getString("Nombre") + " " + jsonObject.getString("Apellidos");
                     } catch (JSONException e) {
@@ -110,6 +111,7 @@ public class Login extends AppCompatActivity {
     private void savePreferences(){
         SharedPreferences preferences = getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("id", id);
         editor.putString("user", user);
         editor.putString("pass", pass);
         editor.putString("name", name);

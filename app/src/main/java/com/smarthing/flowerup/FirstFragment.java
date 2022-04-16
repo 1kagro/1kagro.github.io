@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +80,10 @@ public class FirstFragment extends Fragment {
         recyclerView = (RecyclerView) firstFragment.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+        if(!MainActivity.isOn) {
+            Toast.makeText(getActivity(), "Oh, vaya. Flowerup no está encendido.", Toast.LENGTH_LONG).show();
+        }
 
         ListAdapter listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
