@@ -1,14 +1,23 @@
 package com.smarthing.flowerup;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -47,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
     static boolean isOn = false;
     String string;
 
+    Handler handler = new Handler();
+
+    private  static final String CHANNEL_ID = "canal";
+    private PendingIntent pendingIntent;
+    private String notificacionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +73,24 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //firstFragment.getInten();
 
-        if(elementList.size() < 1) {
-            loadPots("http://192.168.1.10/flowerup/php/androidBd/plantas_user.php");
-            /*elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", 15, 20, true, true));
+        loadPots("http://192.168.1.10/flowerup/php/androidBd/plantas_user.php");
+        /*if(elementList.size() < 1) {
+            elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", 15, 20, true, true));
             elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", 100, 20, true, true));
             elementList.add(new ListElement("Verdecita", "Magnoliophyta", "Estudio", 18, 70, true, true));
             elementList.add(new ListElement("Pullas", "Epipremnum aureum", "Patio", 18, 20, true, true));
             elementList.add(new ListElement("Lengua de suegra", "Dracaena trifasciata", "Patio", 15, 20, true, true));
             elementList.add(new ListElement( "Sol", "Crassula ovata", "Patio", 11, 22, true, true));
             elementList.add(new ListElement("Alixc", "Crassula ovata", "Patio", 15, 20, true, true));
-             */
-        }
-        loadApi("http://192.168.1.12/api", this); // api servidor esp
+        }*/
+        //loadApi("http://192.168.1.12/api"); // api servidor esp
+
         getInten();
+        onApiReady();
         firstFragment.elementList2 = elementList;
         secondFragment.elementList2 = elementList;
         loadFragment(firstFragment);
+        System.out.println("Lista actualizada");
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.firstFragment:
-                    loadApi("http://192.168.1.12/api", MainActivity.this); // api servidor esp
                     loadFragment(firstFragment);
                     return true;
                 case R.id.secondFragment:
@@ -97,12 +112,13 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void loadFragment(Fragment fragment) {
+        //onApiReady();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 
-    public static void loadApi(String URL, Context context) {
+    private void loadApi(String URL) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -114,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                         elementList.get(0).setHumedad((float) jsonObject.getDouble("h_t"));
                         elementList.get(0).setTemp((float) jsonObject.getDouble("t"));
+                        //loadFragment(firstFragment);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -133,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 return parametros;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
@@ -146,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if(!response.isEmpty()){
                     try {
+                        elementList.clear();
                         string = response.replaceAll(" ", "");
 
                         string = "{" + string.substring(0, string.length() - 1) + "}";
@@ -221,8 +239,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onApiReady() {
+        consultarSensores();
+    }
 
+    private final int TIEMPO = 50000;
 
+    public void consultarSensores() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Consulté :D");
+                loadApi("http://192.168.1.12/api");
+                handler.postDelayed(this, TIEMPO);
+            }
+        }, TIEMPO);
+    }
 
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            showNotificaion();
+        } else {
+            showNewNotificaion();
+        }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void showNotificaion() {
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "NEW", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(channel);
+        showNewNotificaion();
+    }
+
+    private void showNewNotificaion() {
+        setPendingIntent(MainActivity.class);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_local_florist_24)
+                .setContentTitle("¡Hola, soy Flower Up!")
+                .setContentText(notificacionText)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+        managerCompat.notify(1, builder.build());
+    }
+
+    private void setPendingIntent(Class<?> ActivityClass) {
+        Intent intent = new Intent(this, ActivityClass);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(ActivityClass);
+        stackBuilder.addNextIntent(intent);
+        pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 }

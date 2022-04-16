@@ -28,13 +28,22 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<ListElement> mData;
+    private List<ListElement> mData2;
+
     private LayoutInflater minflater;
 
     public ListAdapter(List<ListElement> itemList) {
         this.mData = itemList;
+        //mData2.addAll(mData);
+    }
+
+    public void setFilteredList(List<ListElement> filteredList){
+        this.mData = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -55,6 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.temp.setText(item.getTemp() + "");
         holder.humedad.setText(item.getHumedad() + "");
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +78,29 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+    }
+
+    public void filtrado(String txtBuscar) {
+        int longitud = txtBuscar.length();
+        if(longitud == 0){
+            mData.clear();
+            mData.addAll(mData2);
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<ListElement> collecion = mData.stream()
+                        .filter(i -> i.getName().toLowerCase().contains(txtBuscar.toLowerCase()))
+                        .collect(Collectors.toList());
+                mData.clear();
+                mData.addAll(collecion);
+            } else {
+                for (ListElement element: mData2) {
+                    if(element.getName().toLowerCase().contains(txtBuscar.toLowerCase())) {
+                        mData.add(element);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override

@@ -1,10 +1,14 @@
 package com.smarthing.flowerup;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,8 +67,12 @@ public class SecondFragment extends Fragment {
     }
 
     RecyclerView recyclerView;
-    List<ListElement> elementList2;
+    static List<ListElement> elementList2;
     FloatingActionButton fab;
+
+    static ListAdapter listAdapter;
+
+    Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,9 +92,17 @@ public class SecondFragment extends Fragment {
         recyclerView = (RecyclerView) secondFragment.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ListAdapter listAdapter = new ListAdapter(elementList2);
+        listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("RECARGAR first");
 
+                listAdapter.notifyDataSetChanged();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
 
         return secondFragment;
     }

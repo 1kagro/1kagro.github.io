@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309123442332",
+    "project_id": "flowerup-50d4d",
+    "storage_bucket": "flowerup-50d4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309123442332:android:3d4a5f334975da80d8ef59",
+        "android_client_info": {
+          "package_name": "com.smarthing.flowerup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309123442332-fjcohq15d5kb35ted90i1el9doifmg01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClPLu8tYtlyqVn1Pqt4r5W94Fuhjiw85A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309123442332-fjcohq15d5kb35ted90i1el9doifmg01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

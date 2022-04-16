@@ -3,9 +3,12 @@ package com.smarthing.flowerup;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarthing.flowerup.model.ListElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,8 +71,13 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    List<ListElement> elementList2;
+    static ListAdapter listAdapter;
+
+    static List<ListElement> elementList2;
     TextView name;
+
+
+    Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,8 +94,17 @@ public class FirstFragment extends Fragment {
             Toast.makeText(getActivity(), "Oh, vaya. Flowerup no está encendido.", Toast.LENGTH_LONG).show();
         }
 
-        ListAdapter listAdapter = new ListAdapter(elementList2);
+        listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("RECARGAR first");
+
+                listAdapter.notifyDataSetChanged();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
 
         recuperarPreferences();
 
@@ -97,6 +115,7 @@ public class FirstFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
         name.setText(preferences.getString("first_name", "Name"));
     }
+
     /*
     public void api(View view) {
         infoPlanta("http://192.168.18.5/flowerup/php/login.php");

@@ -1,11 +1,23 @@
 package com.smarthing.flowerup;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.smarthing.flowerup.model.ListElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +66,59 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    private View searchFragment;
+    private SearchView searchEt;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        searchFragment = inflater.inflate(R.layout.fragment_search, container, false);
+
+        searchEt = searchFragment.findViewById(R.id.tfbuscar);
+
+        searchEt.clearFocus();
+        searchEt.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
+        return searchFragment;
     }
+
+    private void filterList(String text){
+        List<ListElement> filteredList = new ArrayList<>();
+        List<ListElement> filteredList2 = new ArrayList<>();
+
+        for (ListElement item : FirstFragment.elementList2){
+            if(item.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+
+        for (ListElement item : SecondFragment.elementList2){
+            if(item.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList2.add(item);
+            }
+        }
+
+        if(filteredList.isEmpty() || filteredList2.isEmpty()) {
+            Toast.makeText(getContext(), "No tiene plantas con ese nombre", Toast.LENGTH_SHORT).show();
+        } else {
+            FirstFragment.listAdapter.setFilteredList(filteredList);
+
+            if(SecondFragment.listAdapter == null) {
+                SecondFragment.listAdapter = new ListAdapter(SecondFragment.elementList2);
+            }
+            SecondFragment.listAdapter.setFilteredList(filteredList2);
+        }
+    }
+
 }
