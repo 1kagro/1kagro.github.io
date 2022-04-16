@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //firstFragment.getInten();
-        loadPots("http://192.168.1.10/flowerup/php/androidBd/plantas_user.php");
-        if(elementList.size() < 1) {
 
+        if(elementList.size() < 1) {
+            loadPots("http://192.168.1.10/flowerup/php/androidBd/plantas_user.php");
             /*elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", 15, 20, true, true));
             elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", 100, 20, true, true));
             elementList.add(new ListElement("Verdecita", "Magnoliophyta", "Estudio", 18, 70, true, true));
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
             elementList.add(new ListElement("Alixc", "Crassula ovata", "Patio", 15, 20, true, true));
              */
         }
+        loadApi("http://192.168.1.12/api", this); // api servidor esp
         getInten();
         firstFragment.elementList2 = elementList;
         secondFragment.elementList2 = elementList;
         loadFragment(firstFragment);
-        loadApi("http://192.168.1.12/api"); // api servidor esp
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.firstFragment:
+                    loadApi("http://192.168.1.12/api", MainActivity.this); // api servidor esp
                     loadFragment(firstFragment);
-                    loadApi("http://192.168.1.12/api"); // api servidor esp
                     return true;
                 case R.id.secondFragment:
                     loadFragment(secondFragment);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void loadApi(String URL){
+    public static void loadApi(String URL, Context context) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("Api: " + jsonObject.toString());
                         isOn = true;
 
-                        //elementList.get(0).setHumedad(jsonObject.getInt("h"));
+                        elementList.get(0).setHumedad((float) jsonObject.getDouble("h_t"));
+                        elementList.get(0).setTemp((float) jsonObject.getDouble("t"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 return parametros;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
 

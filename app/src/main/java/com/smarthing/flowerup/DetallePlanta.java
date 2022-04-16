@@ -37,8 +37,8 @@ public class DetallePlanta extends AppCompatActivity {
             tx_name.setText(intent.getStringExtra("name"));
             tx_cat.setText(intent.getStringExtra("category"));
             tx_site.setText(intent.getStringExtra("room"));
-            tx_humidity.setText(intent.getStringExtra("temp"));
-            tx_temper.setText(intent.getStringExtra("humedad"));
+            tx_humidity.setText(intent.getStringExtra("humedad"));
+            tx_temper.setText(intent.getStringExtra("temp"));
         }
     }
 }
