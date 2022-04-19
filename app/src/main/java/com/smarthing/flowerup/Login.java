@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity {
         user = usuario.getText().toString();
         pass = password.getText().toString();
         if(!user.isEmpty() && !pass.isEmpty()) {
-            validarUsuario("http://192.168.1.10/flowerup/php/androidBd/validar_usuario.php");
+            validarUsuario("http://" + getResources().getString(R.string.ip_pc) + "/flowerup/php/androidBd/validar_usuario.php");
         } else {
             Toast.makeText(this, "No se permiten campos vacios", Toast.LENGTH_SHORT).show();
         }
@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, getResources().getString(R.string.pc_no_encendido), Toast.LENGTH_LONG).show();
 
             }
         }){

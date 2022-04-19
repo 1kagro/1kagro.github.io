@@ -90,9 +90,9 @@ public class FirstFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        if(!MainActivity.isOn) {
+        /*if(!MainActivity.isOn) {
             Toast.makeText(getActivity(), "Oh, vaya. Flowerup no está encendido.", Toast.LENGTH_LONG).show();
-        }
+        }*/
 
         listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
@@ -102,9 +102,9 @@ public class FirstFragment extends Fragment {
                 System.out.println("RECARGAR first");
 
                 listAdapter.notifyDataSetChanged();
-                handler.postDelayed(this, 10000);
+                handler.postDelayed(this, 30000);
             }
-        }, 10000);
+        }, 30000);
 
         recuperarPreferences();
 

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.smarthing.flowerup.MainActivity;
@@ -40,4 +42,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         notification.addChannel("Notificaciones", NotificationManager.IMPORTANCE_DEFAULT);
         notification.createChannelGroup(MyNotification.CHANNEL_GROUP_GENERAL, R.string.notification_channel_group_general);
     }
+
+
+
+
 }

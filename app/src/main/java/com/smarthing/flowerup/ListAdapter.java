@@ -61,8 +61,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.name.setText(item.getName());
         holder.category.setText(item.getCategory());
         holder.room.setText(item.getRoom());
-        holder.temp.setText(item.getTemp() + "");
-        holder.humedad.setText(item.getHumedad() + "");
+        holder.temp.setText(item.getTemp() + "°C");
+        holder.humedad.setText(item.getHumedad() + "%");
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +72,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 Intent intent = new Intent(holder.itemView.getContext(), DetallePlanta.class);
                 intent.putExtra("name", holder.name.getText().toString());
                 intent.putExtra("category", holder.category.getText().toString());
-                intent.putExtra("temp", holder.temp.getText().toString());
-                intent.putExtra("humedad", holder.humedad.getText().toString());
+                intent.putExtra("temp", holder.temp.getText().toString().replace("°C", ""));
+                intent.putExtra("humedad", holder.humedad.getText().toString().replace("%", ""));
                 intent.putExtra("room", holder.room.getText().toString());
+                intent.putExtra("dia", item.getDias() + "");
                 holder.itemView.getContext().startActivity(intent);
             }
         });

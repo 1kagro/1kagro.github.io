@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +29,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.smarthing.flowerup.lib.MyFirebaseMessaging;
 import com.smarthing.flowerup.model.ListElement;
 
 import org.json.JSONArray;
@@ -58,14 +64,26 @@ public class MainActivity extends AppCompatActivity {
 
     Handler handler = new Handler();
 
-    private  static final String CHANNEL_ID = "canal";
-    private PendingIntent pendingIntent;
-    private String notificacionText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseMessaging.getInstance().getToken()
+            .addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    if(!task.isSuccessful()){
+                        return;
+                    }
+                    String token = task.getResult();
+                    System.out.println("token " + token);
+                }
+            });
+
+
+
+        System.out.println("token: " + FirebaseMessaging.getInstance().getToken());
 
         fab = findViewById(R.id.floatingActionButton);
 
@@ -73,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //firstFragment.getInten();
 
-        loadPots("http://192.168.1.10/flowerup/php/androidBd/plantas_user.php");
+        loadPots("http://" + getResources().getString(R.string.ip_pc) + "/flowerup/php/androidBd/plantas_user.php");
         /*if(elementList.size() < 1) {
             elementList.add(new ListElement("Nube", "Magnoliophyta", "Dormitorio", 15, 20, true, true));
             elementList.add(new ListElement("Rosa", "Epipremnum aureum", "Sala", 100, 20, true, true));
@@ -87,11 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
         getInten();
         onApiReady();
+        loadApi("http://" + getResources().getString(R.string.ip_esp8266) + "/api");
         firstFragment.elementList2 = elementList;
         secondFragment.elementList2 = elementList;
         loadFragment(firstFragment);
         System.out.println("Lista actualizada");
     }
+
+
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -134,12 +155,14 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.esp8266_no_encendido), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.esp8266_no_encendido), Toast.LENGTH_LONG).show();
             }
         }){
             @Nullable
@@ -180,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Key: " + key);
                             System.out.println("Value: " + value);
                             elementList.add(new ListElement(value.getString("Nombre"), value.getString("Categoria"), value.getString("Ubicacion"), 0, 0, value.getString("estado_temp").equals("1"), value.getString("estado_humedad").equals("1")));
+                            elementList.get(i).setDias(value.getInt("dias"));
                         }
                         /* Separar objeto plantas
                         String string = response;
@@ -198,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.no_hay_plantas), Toast.LENGTH_LONG).show();
                 }
                 System.out.println("Count Response main " + response.length());
 
@@ -205,7 +231,8 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error Volley: " + error);
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.pc_no_encendido), Toast.LENGTH_LONG).show();
+                //System.out.println("Error Volley: " + error);
             }
         }){
             @Nullable
@@ -243,19 +270,20 @@ public class MainActivity extends AppCompatActivity {
         consultarSensores();
     }
 
-    private final int TIEMPO = 50000;
+    private final int TIEMPO = 60000;
 
     public void consultarSensores() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Consulté :D");
-                loadApi("http://192.168.1.12/api");
+                loadApi("http://" + getResources().getString(R.string.ip_esp8266) + "/api");
                 handler.postDelayed(this, TIEMPO);
             }
         }, TIEMPO);
     }
 
+    /*
     public void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             showNotificaion();
@@ -290,5 +318,6 @@ public class MainActivity extends AppCompatActivity {
         stackBuilder.addParentStack(ActivityClass);
         stackBuilder.addNextIntent(intent);
         pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
+    }*/
+
 }

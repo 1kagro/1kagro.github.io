@@ -49,14 +49,13 @@ public class NewPlant extends AppCompatActivity {
         temp = findViewById(R.id.sw_temp);
 
         if(!MainActivity.isOn) {
-            Toast.makeText(this, "Oh, vaya. Flowerup no está encendido.", Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Puede crear una maceta, pero sólo existirá en su corazón :(", Toast.LENGTH_LONG).show();
         }
     }
 
     public void agregarPlanta(View view) {
-        if(MainActivity.elementList.size() >= 1) {
-            Toast.makeText(this, "Oh, vaya. No hemos encontrado una FlowerUp disponible", Toast.LENGTH_SHORT).show();
+        if(MainActivity.elementList.size() == 0) {
+            Toast.makeText(this, getResources().getString(R.string.no_hay_plantas), Toast.LENGTH_SHORT).show();
         }
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -68,7 +67,7 @@ public class NewPlant extends AppCompatActivity {
                 || siteS.replace(" ", "").equals("")){
             Toast.makeText(this, "No puede dejar el ningun campo vacío", Toast.LENGTH_SHORT).show();
         }else{
-            savePot("http://192.168.1.10/flowerup/php/androidBd/crear_planta.php");
+            savePot("http://" + getResources().getString(R.string.ip_pc) + "/flowerup/php/androidBd/crear_planta.php");
             sw_temp = (temp.isChecked() == true ? 1 : 0) + "";
             sw_humedad = (humedad.isChecked() == true ? 1 : 0) + "";
 
