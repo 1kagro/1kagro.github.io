@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Inicio</string>
     <string name="search">Buscar</string>
+
+    <string name="notification_channel_group_general">General</string>
+    <string name="ip_pc">192.168.1.5</string>
+    <string name="ip_esp8266">192.168.1.7</string>
+
+    <string name="esp8266_no_encendido">Oh, vaya. Flowerup no está encendido.</string>
+    <string name="no_hay_plantas">Oh, vaya. No tienes plantas.</string>
+    <string name="pc_no_encendido">Oh, vaya. Estás experimentando problemas con tu red.</string>
 </resources>

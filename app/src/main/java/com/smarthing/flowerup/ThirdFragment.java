@@ -1,12 +1,17 @@
 package com.smarthing.flowerup;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +60,40 @@ public class ThirdFragment extends Fragment {
         }
     }
 
+    Button btnCerrar;
+    TextView name, email;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false);
+
+        View thirdFragment = inflater.inflate(R.layout.fragment_third, container, false);
+
+        btnCerrar = thirdFragment.findViewById(R.id.btn_cerrar_sesion);
+
+        name = thirdFragment.findViewById(R.id.tx_name);
+        email = thirdFragment.findViewById(R.id.tx_email);
+
+        recuperarPreferences();
+
+        btnCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
+                preferences.edit().clear().commit();
+
+                Intent intent = new Intent(getActivity().getApplicationContext(), Login.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        return thirdFragment;
+    }
+
+    private void recuperarPreferences(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
+        name.setText(preferences.getString("name", "Name"));
+        email.setText(preferences.getString("user", "Email"));
     }
 }

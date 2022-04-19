@@ -1,11 +1,11 @@
 package com.smarthing.flowerup;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DetallePlanta extends AppCompatActivity {
 
@@ -37,8 +37,9 @@ public class DetallePlanta extends AppCompatActivity {
             tx_name.setText(intent.getStringExtra("name"));
             tx_cat.setText(intent.getStringExtra("category"));
             tx_site.setText(intent.getStringExtra("room"));
-            tx_humidity.setText(intent.getStringExtra("temp"));
-            tx_temper.setText(intent.getStringExtra("humedad"));
+            tx_humidity.setText(intent.getStringExtra("humedad"));
+            tx_temper.setText(intent.getStringExtra("temp"));
+            tx_water_tank.setText(intent.getStringExtra("dia"));
         }
     }
 }

@@ -1,18 +1,21 @@
 package com.smarthing.flowerup;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarthing.flowerup.model.ListElement;
 
 import java.util.ArrayList;
@@ -68,7 +71,13 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    List<ListElement> elementList2;
+    static ListAdapter listAdapter;
+
+    static List<ListElement> elementList2;
+    TextView name;
+
+
+    Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,16 +85,75 @@ public class FirstFragment extends Fragment {
         // Inflate the layout for this fragment
         View firstFragment = inflater.inflate(R.layout.fragment_first, container, false);
 
+        name = firstFragment.findViewById(R.id.tx_title2);
         recyclerView = (RecyclerView) firstFragment.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        ListAdapter listAdapter = new ListAdapter(elementList2);
+        /*if(!MainActivity.isOn) {
+            Toast.makeText(getActivity(), "Oh, vaya. Flowerup no está encendido.", Toast.LENGTH_LONG).show();
+        }*/
+
+        listAdapter = new ListAdapter(elementList2);
         recyclerView.setAdapter(listAdapter);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("RECARGAR first");
+
+                listAdapter.notifyDataSetChanged();
+                handler.postDelayed(this, 30000);
+            }
+        }, 30000);
+
+        recuperarPreferences();
 
 
         return firstFragment;
     }
+    private void recuperarPreferences(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
+        name.setText(preferences.getString("first_name", "Name"));
+    }
+
+    /*
+    public void api(View view) {
+        infoPlanta("http://192.168.18.5/flowerup/php/login.php");
+    }
+
+
+    private void infoPlanta(String URL){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (!response.isEmpty()){
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(FirstFragment.this, "Usuario o contraseña incorrectas", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(FirstFragment.this, error.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String,String>();
+                parametros.put("correo",usuario.getText().toString());
+                parametros.put("pass",password.getText().toString());
+
+                return parametros;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }*/
 
     public void getInten(){
 

@@ -9,6 +9,7 @@ public class ListElement {
     private float temp;
     private boolean sw_temp;
     private boolean sw_humedad;
+    private int dias;
 
     public ListElement(String name, String category, String room, float humedad, float temp, boolean sw_temp, boolean sw_humedad) {
         this.setName(name);
@@ -82,5 +83,13 @@ public class ListElement {
 
     public void setSw_humedad(boolean sw_humedad) {
         this.sw_humedad = sw_humedad;
+    }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
     }
 }

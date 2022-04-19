@@ -1,5 +1,6 @@
 package com.smarthing.flowerup;
 
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +10,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.smarthing.flowerup.model.ListElement;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<ListElement> mData;
+    private List<ListElement> mData2;
+
     private LayoutInflater minflater;
 
     public ListAdapter(List<ListElement> itemList) {
         this.mData = itemList;
+        //mData2.addAll(mData);
+    }
+
+    public void setFilteredList(List<ListElement> filteredList){
+        this.mData = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -31,28 +54,54 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(mData.get(position));
 
         final ListElement item = mData.get(position);
         holder.name.setText(item.getName());
         holder.category.setText(item.getCategory());
         holder.room.setText(item.getRoom());
-        holder.temp.setText(item.getTemp() + "");
-        holder.humedad.setText(item.getHumedad() + "");
+        holder.temp.setText(item.getTemp() + "°C");
+        holder.humedad.setText(item.getHumedad() + "%");
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(holder.itemView.getContext(), DetallePlanta.class);
                 intent.putExtra("name", holder.name.getText().toString());
                 intent.putExtra("category", holder.category.getText().toString());
-                intent.putExtra("temp", holder.temp.getText().toString());
-                intent.putExtra("humedad", holder.humedad.getText().toString());
+                intent.putExtra("temp", holder.temp.getText().toString().replace("°C", ""));
+                intent.putExtra("humedad", holder.humedad.getText().toString().replace("%", ""));
                 intent.putExtra("room", holder.room.getText().toString());
+                intent.putExtra("dia", item.getDias() + "");
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+    }
+
+    public void filtrado(String txtBuscar) {
+        int longitud = txtBuscar.length();
+        if(longitud == 0){
+            mData.clear();
+            mData.addAll(mData2);
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<ListElement> collecion = mData.stream()
+                        .filter(i -> i.getName().toLowerCase().contains(txtBuscar.toLowerCase()))
+                        .collect(Collectors.toList());
+                mData.clear();
+                mData.addAll(collecion);
+            } else {
+                for (ListElement element: mData2) {
+                    if(element.getName().toLowerCase().contains(txtBuscar.toLowerCase())) {
+                        mData.add(element);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
